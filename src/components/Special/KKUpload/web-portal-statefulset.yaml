@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-portal4.0-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: web-portal4.0
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web-portal4.0
+    spec:
+      securityContext:
+        sysctls:
+        - name: net.core.somaxconn
+          value: "65535"
+      terminationGracePeriodSeconds: 10
+      imagePullSecrets:
+      - name: registry-secret
+      containers:
+      - name: web-django
+        image: octahub.8lab.cn:5000/99/web-django4.0:v210708 
+        ports:
+        - containerPort: 8001
+          name: django
+        volumeMounts:
+        - name: webconfig
+          mountPath: /usr/local/octa_cis/conf
+        - name: photo
+          mountPath: /8lab/upload/chain_user_photo
+        - name: chain-data
+          mountPath: /data/chain/chain-attach
+        - name: log-data
+          mountPath: /var/log/octa_cis
+        #- name: sms-data
+        #  mountPath: /var/log/sms
+        - name: excel-data
+          mountPath: /data/export_file_dir
+      - name: web-nginx
+        image: octahub.8lab.cn:5000/99/web-nginx4.0:v210708 
+        livenessProbe:
+          initialDelaySeconds: 20   #延迟加载时间
+          periodSeconds: 5          #重试时间间隔
+          timeoutSeconds: 10        #超时时间设置
+          httpGet:
+            scheme: HTTPS
+            port: 8099
+            path: /
+        ports:
+        - containerPort: 8099
+          name: nginx
+        volumeMounts:
+        - name: chain-data
+          mountPath: /data/chain/chain-attach
+        - name: photo
+          mountPath: /8lab/upload/chain_user_photo
+        - name: excel-data
+          mountPath: /data/export_file_dir
+      volumes:   
+      - name: webconfig
+        configMap:
+          name: web4.0configmap
+      - name: photo
+        hostPath:
+          path: /data/web4.0/chain/chain_user_photo
+      - name: excel-data
+        hostPath:
+          path: /data/web4.0/export_file_dir/
+      - name: chain-data
+        hostPath:
+          path: /data/web4.0/chain/chain-attach          
+      - name: log-data
+        hostPath:
+          path: /data/web4.0/logs/
+      #- name: sms-data
+      #  hostPath:
+      #    path: /data/web4.0/msg          
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: web-portal4.0 
+                operator: In
+                values:
+                - web-portal4.0
+      tolerations:
+      - key: "ctrl"
+        operator: "Equal"
+        value: "adm"
+        effect: "NoSchedule"
