@@ -23,7 +23,8 @@ module.exports = {
         },
       },
       '/api': {
-        target: 'http://192.168.1.99:9002',
+        // target: 'http://192.168.1.99:9002',
+        target: 'http://localhost:4402',
         ws: true,
         secure: false,
         pathRewrite: {
@@ -31,6 +32,7 @@ module.exports = {
         },
       },
     },
+    before: require('./src/mocks/mock-server.js'),
   },
   productionSourceMap: false,
   configureWebpack: {
