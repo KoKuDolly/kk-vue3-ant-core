@@ -8,7 +8,7 @@
     :rules="rules"
   >
     <FormItem
-      v-for="(item, index) in config"
+      v-for="(item, index) in localeConfig"
       :key="index"
       :label="item.label"
       :name="item.key"
@@ -18,7 +18,8 @@
         v-model:value="values[item.key]"
         allowClear
         :options="item.options"
-        labelInValue
+        :labelInValue="item.labelInValue"
+        @change="(value, option) => selectChange(value, option, item)"
       ></Select>
       <Input v-else v-model:value="values[item.key]" />
     </FormItem>
@@ -43,16 +44,39 @@ export default {
     config: Array,
     rules: Object,
   },
-  setup(props) {
+  emits: ['emit:selectChange'],
+  setup(props, { emit }) {
     const { labelCol, wrapperCol } = useFormHooks()
     const form = ref()
     const values = ref(props.modelValue)
+
+    const localeConfig = ref(props.config)
+
+    localeConfig.value.forEach((__) => {
+      if (__.remoteOptions && __.remoteOptionsConfig) {
+        __.remoteOptions().then((res) => {
+          __.options = res.data.data.map((_) => {
+            return {
+              ..._,
+              label: _[__.remoteOptionsConfig.label],
+              value: _[__.remoteOptionsConfig.value],
+            }
+          })
+        })
+      }
+    })
+
+    const selectChange = (value, option, item) => {
+      emit('emit:selectChange', { item, value, option })
+    }
 
     return {
       labelCol,
       wrapperCol,
       form,
       values,
+      localeConfig,
+      selectChange,
     }
   },
 }

@@ -34,7 +34,7 @@ export const router = {
     generateRoutes({ commit }) {
       return new Promise((resolve) => {
         // const { menus } = data
-        console.log(routeMaps.asyncRouterMap)
+        // console.log(routeMaps.asyncRouterMap)
         const asyncRouterMap = deepCopy(routeMaps.asyncRouterMap)
         // const accessedRouters = filterAsyncRouter(asyncRouterMap, menus)
         // commit('SET_ROUTERS', accessedRouters)

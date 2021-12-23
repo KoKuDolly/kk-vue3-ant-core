@@ -11,7 +11,7 @@ module.exports = {
     },
   },
   devServer: {
-    port: 4401,
+    port: 4402,
     open: true,
     proxy: {
       '/api/upload': {
