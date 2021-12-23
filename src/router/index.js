@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-function getRouter(routeMaps) {
+function getRouter(store, routeMaps) {
+  console.log('src/router/index.js --- 4', store, routeMaps)
   return createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes: [
@@ -14,7 +15,9 @@ function getRouter(routeMaps) {
           hidden: false,
           icon: 'PieChartOutlined',
         },
-        children: [...routeMaps],
+        children: routeMaps.constantRouterMap.concat(
+          ...routeMaps.asyncRouterMap
+        ),
       },
     ],
   })

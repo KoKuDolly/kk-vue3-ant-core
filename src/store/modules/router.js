@@ -1,4 +1,4 @@
-import { routes } from '@/router/'
+import routeMaps from '@/router/router.map.js'
 import { deepCopy } from '@/utils/tools.js'
 
 export const hasPermission = (menus, route) => {
@@ -34,7 +34,8 @@ export const router = {
     generateRoutes({ commit }) {
       return new Promise((resolve) => {
         // const { menus } = data
-        const asyncRouterMap = deepCopy(routes)
+        console.log(routeMaps.asyncRouterMap)
+        const asyncRouterMap = deepCopy(routeMaps.asyncRouterMap)
         // const accessedRouters = filterAsyncRouter(asyncRouterMap, menus)
         // commit('SET_ROUTERS', accessedRouters)
         // resolve(accessedRouters)

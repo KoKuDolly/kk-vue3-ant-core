@@ -1,13 +1,12 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 // 引入自己项目的store 和 router
-import routerMap from './router/'
-// kk-vue3-ant-components-core
+import routerFun from './router/'
+import store from './store'
 import KK from '../src/index'
-
-const store = KK.store
-const router = KK.router(routerMap)
+import '@/styles/index.less'
 
 const app = createApp(App)
+const router = routerFun(store)
 
 app.use(router).use(store).use(KK).mount('#app')

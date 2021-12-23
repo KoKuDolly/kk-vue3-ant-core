@@ -10,6 +10,7 @@ import switchTabPage from '@/components/switchTabPage/'
 import switchTheme from '@/components/switchTheme/'
 
 import plugins from '@/plugins/'
+import routerMap from '@/router/router.map.js'
 
 import store from '@/store/'
 import router from '@/router/'
@@ -79,6 +80,7 @@ export {
   request,
   store,
   router,
+  routerMap,
 }
 
 function installComponents(app) {
@@ -95,4 +97,5 @@ export default {
   request,
   store,
   router,
+  routerMap,
 }
