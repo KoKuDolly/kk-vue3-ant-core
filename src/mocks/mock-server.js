@@ -12,7 +12,7 @@ function registerRoutes(app) {
   const mocksForServer = mocks.map((route) => {
     return responseFake(route.url, route.type, route.response)
   })
-
+  console.log('\n')
   for (const mock of mocksForServer) {
     app[mock.type](mock.url, mock.response)
     console.log(mock.type, mock.url)
