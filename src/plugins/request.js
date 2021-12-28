@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { message } from 'ant-design-vue'
 
 const baseUrl = '/api'
 
@@ -22,7 +23,9 @@ instance.interceptors.response.use(
     return response
   },
   function (error) {
-    return Promise.reject(error)
+    console.log(error, error.name, error.message, error.body)
+    // return Promise.reject(error)
+    return message.error(error.message)
   }
 )
 
