@@ -21,15 +21,24 @@
         :labelInValue="item.labelInValue"
         @change="(value, option) => selectChange(value, option, item)"
       ></Select>
-      <Input v-else v-model:value="values[item.key]" />
+      <Input
+        v-else-if="item.type === 'input'"
+        v-model:value="values[item.key]"
+      />
+      <RadioGroup
+        v-else-if="item.type === 'radioGroup'"
+        v-model:value="values[item.key]"
+        :options="item.options"
+      ></RadioGroup>
     </FormItem>
   </Form>
 </template>
 <script>
 import { ref } from 'vue'
-import { Form, Input, Select } from 'ant-design-vue'
+import { Form, Input, Select, Radio } from 'ant-design-vue'
 import useFormHooks from './hooks/useFormHooks'
 const FormItem = Form.Item
+const RadioGroup = Radio.Group
 
 export default {
   name: 'KKForm',
@@ -38,6 +47,7 @@ export default {
     FormItem,
     Input,
     Select,
+    RadioGroup,
   },
   props: {
     modelValue: Object,

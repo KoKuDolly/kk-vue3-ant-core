@@ -1,7 +1,12 @@
 import axios from 'axios'
-import { message } from 'ant-design-vue'
+import {
+  responseCodeInclude200,
+  responseCodeNotInclude200,
+} from './responseCodeFilter.js'
 
-const baseUrl = '/api'
+import storage from '@/utils/storage.js'
+
+const baseUrl = process.env.VUE_APP_BASE_URL
 
 const instance = axios.create({
   baseURL: baseUrl,
@@ -11,6 +16,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
+    config.headers.Authorization = storage.getSessionStorage('KK_SESSION_ID')
     return config
   },
   (error) => {
@@ -20,12 +26,14 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   function (response) {
+    // 全局的提示
+    responseCodeInclude200(response)
     return response
   },
   function (error) {
-    console.log(error, error.name, error.message, error.body)
-    // return Promise.reject(error)
-    return message.error(error.message)
+    // 全局的网络非200提示
+    responseCodeNotInclude200(error)
+    return Promise.reject(error)
   }
 )
 

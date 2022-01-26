@@ -47,7 +47,7 @@ export function formatJson(jsonStr) {
 
   var i = 0
   var len = 0
-  var tab = '    '
+  var tab = ' '
   var targetJson = ''
   var indentLevel = 0
   var inString = false

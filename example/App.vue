@@ -1,9 +1,22 @@
 <template>
-  <router-view></router-view>
+  <router-view />
 </template>
-<script>
-export default {
-  name: 'App',
-  setup() {},
+
+<style>
+*,
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-</script>
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+#app {
+  height: 100%;
+  width: 100%;
+}
+</style>

@@ -5,11 +5,19 @@
     </div>
     <Skeleton active :loading="loading">
       <div class="main-content-container-table">
-        <Table :data-source="pageData" :columns="columns" rowKey="id">
+        <Table
+          :data-source="pageData"
+          :columns="columns"
+          rowKey="id"
+          :pagination="pagination"
+        >
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'action'">
               <span class="table-columns-action-container">
-                <span @click="handleCheck(record)">查看Repo</span>
+                <span @click="handleCheck(record)">详情</span>
+              </span>
+              <span class="table-columns-action-container">
+                <span @click="handleEditRepo(record)">编辑</span>
               </span>
               <span class="table-columns-action-container">
                 <span @click="handleAddEvent(record)">新增Event</span>
@@ -34,6 +42,13 @@
         @emit:selectChange="catchSelected"
       />
       <KKForm
+        v-if="modalConfig.type === 'editRepo'"
+        ref="kkform"
+        v-model="editRepoFormData"
+        :config="editRepoFormConfig"
+        :rules="editRepoRules"
+      />
+      <KKForm
         v-if="modalConfig.type === 'addRepoEvent'"
         ref="kkform"
         v-model="createEventFormData"
@@ -54,8 +69,10 @@ import useModal from './hooks/useModal'
 import useCreateRepo from './hooks/useCreateRepo'
 import useCheckRepo from './hooks/useCheckRepo'
 import useCreateEvent from './hooks/useCreateEvent'
+import useEditRepo from './hooks/useEditRepo'
 
 export default defineComponent({
+  name: 'repo-list',
   components: {
     Button,
     Table,
@@ -65,7 +82,8 @@ export default defineComponent({
     KKModalDetail,
   },
   setup() {
-    const { pageData, columns, loading } = useTableData()
+    const { pageData, columns, loading, pagination, getPageData } =
+      useTableData()
 
     const kkform = ref()
     const { modalVisible, modalConfig } = useModal()
@@ -76,7 +94,7 @@ export default defineComponent({
       createRepoRules,
       handleAddRepo,
       catchSelected,
-    } = useCreateRepo(modalVisible, modalConfig, kkform)
+    } = useCreateRepo(modalVisible, modalConfig, kkform, getPageData)
 
     const { checkRepoFormData, checkRepoConfig, handleCheck } = useCheckRepo(
       modalVisible,
@@ -90,11 +108,18 @@ export default defineComponent({
       handleAddEvent,
     } = useCreateEvent(modalVisible, modalConfig, kkform)
 
+    const {
+      editRepoFormData,
+      editRepoFormConfig,
+      editRepoRules,
+      handleEditRepo,
+    } = useEditRepo(modalVisible, modalConfig, kkform, getPageData)
     return {
       // table
       pageData,
       columns,
       loading,
+      pagination,
       // form $refs
       kkform,
       // modal
@@ -115,6 +140,11 @@ export default defineComponent({
       createEventFormConfig,
       createEventRules,
       handleAddEvent,
+      // edit repo
+      editRepoFormData,
+      editRepoFormConfig,
+      editRepoRules,
+      handleEditRepo,
     }
   },
 })
