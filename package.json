@@ -5,12 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve --mode dev",
     "build:dev": "vue-cli-service build --mode dev",
-    "build:prod": "vue-cli-service build --mode prod",
+    "build:prod": "vue-cli-service build --mode prod && npm run zip",
+    "zip": "source zip.sh",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "ant-design-vue": "^3.0.0-alpha.13",
     "axios": "^0.24.0",
+    "codemirror": "^5.65.1",
     "core-js": "^3.6.5",
     "less-loader": "^6.0.0",
     "vue": "^3.0.0",

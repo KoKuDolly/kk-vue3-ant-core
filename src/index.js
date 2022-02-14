@@ -31,6 +31,7 @@ const KKForm = Special.KKForm
 const KKModal = Special.KKModal
 const KKModalDetail = Special.KKModalDetail
 const KKUpload = Special.KKUpload
+const KKCodeMirror = Special.KKCodeMirror
 
 export const components = {
   RenderMenuItems,
@@ -52,6 +53,7 @@ export const components = {
   KKModal,
   KKModalDetail,
   KKUpload,
+  KKCodeMirror,
   switchTabPage,
   switchTheme,
 }
@@ -76,6 +78,7 @@ export {
   KKModal,
   KKModalDetail,
   KKUpload,
+  KKCodeMirror,
   switchTabPage,
   switchTheme,
   request,

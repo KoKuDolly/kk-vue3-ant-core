@@ -1,3 +1,4 @@
+import KKCodeMirror from './KKCodeMirror/'
 import KKForm from './KKForm/'
 import KKModal from './KKModal/'
 import KKModalDetail from './KKModalDetail/'
@@ -8,6 +9,7 @@ const Special = {
   KKModal,
   KKModalDetail,
   KKUpload,
+  KKCodeMirror,
 }
 
 export default Special

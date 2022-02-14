@@ -5,7 +5,8 @@ export default function useAsiderMenuHooks() {
   const menuData = ref([])
 
   const store = useStore()
-  const routers = store.getters['router/routers'].filter(
+  console.log(store)
+  const routers = store.getters['router/routers'][0].children.filter(
     (__) => !__.meta.hidden && __.meta.type !== 'normal'
   )
 

@@ -8,16 +8,22 @@
     :destroyOnClose="true"
     :footer="modalConfig.showFooter ? void 0 : null"
   >
-    <slot></slot>
+    <Spin :spinning="modalConfig.spin.spinning" :tip="modalConfig.spin.tip">
+      <slot></slot>
+    </Spin>
+
     <template #footer>
       <slot name="footer">
         <span class="Modal-footer">
           <Button @click="childVisible = false">{{
             modalConfig.cancelText
           }}</Button>
-          <Button type="primary" @click="modalConfig.submit">{{
-            modalConfig.confirmText
-          }}</Button>
+          <Button
+            type="primary"
+            @click="modalConfig.submit"
+            :loading="modalConfig.loading"
+            >{{ modalConfig.confirmText }}</Button
+          >
         </span>
       </slot>
     </template>
@@ -25,7 +31,7 @@
 </template>
 <script>
 import { ref, watch } from 'vue'
-import { Modal, Button } from 'ant-design-vue'
+import { Modal, Button, Spin } from 'ant-design-vue'
 import useModal from './hooks/useModal'
 
 export default {
@@ -33,6 +39,7 @@ export default {
   components: {
     Modal,
     Button,
+    Spin,
   },
   props: {
     modalConfig: Object,

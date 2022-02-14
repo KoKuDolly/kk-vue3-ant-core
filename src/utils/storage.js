@@ -37,3 +37,14 @@ export const removelocalStorage = (key = '') => {
 export const clearlocalStorage = () => {
   localStorage.clear()
 }
+
+export default {
+  setSessionStorage,
+  getSessionStorage,
+  removeSessionStorage,
+  clearSessionStorage,
+  setlocalStorage,
+  getlocalStorage,
+  removelocalStorage,
+  clearlocalStorage,
+}

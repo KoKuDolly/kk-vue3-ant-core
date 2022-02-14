@@ -17,17 +17,29 @@ export function addRepoApi(payload) {
     url: 'repo/',
     method: 'post',
     data: payload,
+    timeout: 30000,
+  })
+}
+// 编辑 repo
+export function editRepoApi({ id, data }) {
+  return request({
+    url: `repo/${id}/`,
+    method: 'patch',
+    data,
+    timeout: 30000,
   })
 }
 // repo 列表
-export function getRepoApi() {
+export function getRepoApi(
+  params = {
+    pageSize: 10,
+    currentPage: 1,
+  }
+) {
   return request({
     url: 'repo/',
     method: 'get',
-    params: {
-      pageSize: 10,
-      currentPage: 1,
-    },
+    params,
   })
 }
 // repo check
@@ -41,14 +53,16 @@ export function checkRepoApi({ id }) {
  * event
  */
 // event 列表
-export function getEventApi() {
+export function getEventApi(
+  params = {
+    pageSize: 10,
+    currentPage: 1,
+  }
+) {
   return request({
     url: `repo/event/`,
     method: 'get',
-    params: {
-      pageSize: 10,
-      currentPage: 1,
-    },
+    params,
   })
 }
 // event add
@@ -79,26 +93,28 @@ export function checkEventApi({ id }) {
  */
 
 // Job list
-export function getJobListApi() {
+export function getCIListApi(
+  params = {
+    pageSize: 10,
+    currentPage: 1,
+  }
+) {
   return request({
     url: `repo/event/job/`,
     method: 'get',
-    params: {
-      pageSize: 10,
-      currentPage: 1,
-    },
+    params,
   })
 }
 // Job add
-export function addJobApi({ id }) {
+export function addCIApi(data) {
   return request({
     url: `repo/event/job/`,
     method: 'post',
-    data: { id },
+    data,
   })
 }
 // Job Delete
-export function deleteJobApi({ id }) {
+export function deleteCIApi({ id }) {
   return request({
     url: `repo/event/job/`,
     method: 'delete',
@@ -106,7 +122,7 @@ export function deleteJobApi({ id }) {
   })
 }
 // Job Detail
-export function getJobDetailApi({ id }) {
+export function getCIDetailApi({ id }) {
   return request({
     url: `repo/event/job/${id}/`,
     method: 'get',
@@ -132,6 +148,22 @@ export function getLogApi({ jobType }) {
 export function specialCheckApi() {
   return request({
     url: 'check/',
+    method: 'get',
+  })
+}
+
+// cd 接口
+export function getCDListApi() {
+  return request({
+    url: 'repo/event/cd/',
+    method: 'get',
+  })
+}
+
+// 查看某一个cd 的接口
+export function checkCDListApi({ id }) {
+  return request({
+    url: `repo/event/cd/${id}/`,
     method: 'get',
   })
 }

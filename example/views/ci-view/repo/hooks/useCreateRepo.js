@@ -1,7 +1,12 @@
 import { ref, watch } from 'vue'
 import { addRepoApi, getClusterListApi } from '@example/api/ci-view.js'
 
-export default function useCreateRepo(modalVisible, modalConfig, kkform) {
+export default function useCreateRepo(
+  modalVisible,
+  modalConfig,
+  kkform,
+  getPageData
+) {
   const createRepoFormData = ref({
     user_name: 'admin',
     cluster_name: '',
@@ -33,27 +38,18 @@ export default function useCreateRepo(modalVisible, modalConfig, kkform) {
     {
       label: 'repo名称',
       key: 'repo_name',
+      type: 'input',
     },
     {
       label: 'repo地址',
       key: 'repo',
+      type: 'input',
     },
-    // {
-    //   label: '镜像',
-    //   key: 'images',
-    // },
     {
       label: 'branch',
       key: 'branch',
+      type: 'input',
     },
-    // {
-    //   label: 'build_path',
-    //   key: 'build_path',
-    // },
-    // {
-    //   label: 'dockerfile',
-    //   key: 'dockerfile',
-    // },
   ]
 
   const createRepoRules = {
@@ -110,8 +106,6 @@ export default function useCreateRepo(modalVisible, modalConfig, kkform) {
   }
 
   const catchSelected = ({ value, option, item }) => {
-    console.log(item, value, option)
-
     Object.keys(item.keys).forEach((key) => {
       createRepoFormData.value[key] =
         option.value === value ? option[item.keys[key]] : ''
@@ -119,20 +113,16 @@ export default function useCreateRepo(modalVisible, modalConfig, kkform) {
   }
 
   const submit = () => {
-    kkform.value.form
-      .validate()
-      .then(() => {
-        addRepoApi(createRepoFormData.value)
-          .then(() => {})
-          .catch((error) => {
-            console.log(error)
-          })
-
+    kkform.value.form.validate().then(() => {
+      modalConfig.loading = true
+      modalConfig.spin.spinning = true
+      addRepoApi(createRepoFormData.value).then(() => {
         modalVisible.value = false
+        modalConfig.loading = false
+        modalConfig.spin.spinning = false
+        getPageData('add')
       })
-      .catch((error) => {
-        console.log(error)
-      })
+    })
   }
 
   watch(modalVisible, (cur) => {
@@ -145,15 +135,18 @@ export default function useCreateRepo(modalVisible, modalConfig, kkform) {
       createRepoFormData.value.images = ''
       createRepoFormData.value.build_path = ''
       createRepoFormData.value.dockerfile = ''
+
+      modalConfig.loading = false
     }
   })
 
   const handleAddRepo = () => {
     modalVisible.value = true
-    modalConfig.title = '新增'
+    modalConfig.title = '新增Repo'
     modalConfig.type = 'addRepo'
     modalConfig.showFooter = true
     modalConfig.submit = submit
+    modalConfig.spin.tip = '新增repo中...'
   }
 
   return {

@@ -1,26 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-function getRouter(store, routeMaps) {
-  console.log('src/router/index.js --- 4', store, routeMaps)
-  return createRouter({
+function getRouter(store, routes) {
+  const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes: [
-      {
-        path: '/',
-        name: 'Layout',
-        redirect: '/home',
-        component: () => import('@/components/Layout/'),
-        meta: {
-          title: 'Layout',
-          hidden: false,
-          icon: 'PieChartOutlined',
-        },
-        children: routeMaps.constantRouterMap.concat(
-          ...routeMaps.asyncRouterMap
-        ),
-      },
-    ],
+    routes,
   })
+
+  if (store && store._actions['router/init']) {
+    store.dispatch('router/init')
+  }
+
+  router.beforeEach((to) => {
+    if (store.getters.sessionId) {
+      if (to.name === 'login') {
+        return '/'
+      }
+    } else {
+      if (to.name !== 'login') {
+        return '/login'
+      }
+    }
+  })
+
+  router.afterEach(() => {
+    window.scrollTo(0, 0)
+  })
+
+  return router
 }
 
 export default getRouter

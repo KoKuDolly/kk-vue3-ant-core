@@ -20,16 +20,6 @@ export default [
     },
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/components/normal/login/'),
-    meta: {
-      hidden: true,
-      name: 'login',
-      type: 'normal',
-    },
-  },
-  {
     path: '/:catchAll(.*)*',
     component: () => import('@/components/normal/404/'),
     meta: {

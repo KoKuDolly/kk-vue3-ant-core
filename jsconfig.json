@@ -1,0 +1,17 @@
+{
+  "exclude": ["node_modules", "dist"],
+  "include": ["src/**/*", "example/**/*"],
+  "compilerOptions": {
+    "noLib": false,
+    "target": "es6",
+    "module": "umd",
+    "moduleResolution": "classic",
+    "checkJs": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

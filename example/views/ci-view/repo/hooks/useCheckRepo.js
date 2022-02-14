@@ -18,20 +18,8 @@ export default function useCheckRepo(modalVisible, modalConfig) {
       key: 'repo',
     },
     {
-      label: '镜像',
-      key: 'images',
-    },
-    {
       label: 'branch',
       key: 'branch',
-    },
-    {
-      label: 'build_path',
-      key: 'build_path',
-    },
-    {
-      label: 'dockerfile',
-      key: 'dockerfile',
     },
   ]
   const handleCheck = (record) => {
