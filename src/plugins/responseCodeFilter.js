@@ -84,6 +84,7 @@ export const responseCodeSuccessOrFailed = (response) => {
     data: { code },
   } = response
   switch (code) {
+    case 100000:
     case 'c00000':
     case 'c10000':
     case 'c10004':

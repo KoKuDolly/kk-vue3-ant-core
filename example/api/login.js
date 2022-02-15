@@ -4,7 +4,7 @@ import { request } from '@/plugins/request'
  */
 export function loginApi(data) {
   return request({
-    url: 'login/',
+    url: 'kk/user/login',
     method: 'post',
     data,
   })

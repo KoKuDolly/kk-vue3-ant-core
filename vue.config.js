@@ -13,25 +13,16 @@ module.exports = {
   devServer: {
     port: 4402,
     open: true,
-    proxy: {
-      '/api/upload': {
-        target: 'http://10.2.1.241:8000/',
-        ws: true,
-        secure: false,
-        pathRewrite: {
-          ['^/api/upload']: '',
-        },
-      },
-      '/api': {
-        // target: 'http://192.168.1.99:9002',
-        target: 'http://localhost:4402',
-        ws: true,
-        secure: false,
-        pathRewrite: {
-          ['^/api']: '',
-        },
-      },
-    },
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:4402',
+    //     ws: true,
+    //     secure: false,
+    //     pathRewrite: {
+    //       // ['^/api']: '',
+    //     },
+    //   },
+    // },
     before: require('./src/mocks/mock-server.js'),
   },
   productionSourceMap: false,

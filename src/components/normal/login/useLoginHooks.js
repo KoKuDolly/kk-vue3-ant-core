@@ -11,13 +11,13 @@ export default function useLoginHooks(model, form) {
     form.value.validate().then(() => {
       const { username, password } = model
       const params = {
-        user: username,
+        username,
         password,
       }
 
       loginApi(params).then((res) => {
         if (responseCodeSuccessOrFailed(res) !== 1) {
-          store.dispatch('router/login', res?.data ?? {})
+          store.dispatch('router/login', res?.data?.data ?? {})
           router.push('/')
         }
       })
