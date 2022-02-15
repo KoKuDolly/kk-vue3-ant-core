@@ -5,7 +5,7 @@ import fullScreen from '@/components/fullScreen/'
 import Layout from '@/components/Layout/'
 import normal from '@/components/normal/'
 import renderIcon from '@/components/renderIcon/'
-import Special from '@/components/Special/'
+import Special from '@/components/Special/index'
 import switchTabPage from '@/components/switchTabPage/'
 import switchTheme from '@/components/switchTheme/'
 

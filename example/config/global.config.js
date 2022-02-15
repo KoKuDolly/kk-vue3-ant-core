@@ -1,4 +1,4 @@
-import KK from '@/'
+import KK from '@/index'
 
 const { globalConfig } = KK
 

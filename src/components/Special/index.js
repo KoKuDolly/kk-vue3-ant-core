@@ -1,8 +1,8 @@
 import KKCodeMirror from './KKCodeMirror/'
 import KKForm from './KKForm/'
 import KKModal from './KKModal/'
-import KKModalDetail from './KKModalDetail/'
-import KKUpload from './KKUpload/'
+import KKModalDetail from './KKModalDetail/index.vue'
+import KKUpload from './KKUpload/index.vue'
 
 const Special = {
   KKForm,
