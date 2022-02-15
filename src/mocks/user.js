@@ -27,7 +27,7 @@ const users = {
 module.exports = [
   // user login
   {
-    url: '/kk/user/login',
+    url: '/kk/login',
     type: 'post',
     response: (config) => {
       // console.log(config)
@@ -49,10 +49,10 @@ module.exports = [
   },
   // get user info
   {
-    url: '/kk/get/info',
+    url: '/kk/userInfo',
     type: 'post',
     response: (config) => {
-      const { token } = config.query
+      const { token } = config.body
       const info = users[token]
 
       if (!info) {
@@ -70,7 +70,7 @@ module.exports = [
   },
   // user logout
   {
-    url: '/kk/user/logout',
+    url: '/kk/logout',
     type: 'post',
     response: () => {
       return {

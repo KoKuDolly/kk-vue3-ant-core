@@ -50,9 +50,7 @@
         <p class="form-login-info">输入任意用户名和密码即可</p>
       </div>
     </div>
-    <div class="login-content-footer">
-      Copyright © 2021 北京八分量科技有限公司
-    </div>
+    <div class="login-content-footer">Copyright © 2022 KoKuDolly</div>
   </div>
 </template>
 <script>

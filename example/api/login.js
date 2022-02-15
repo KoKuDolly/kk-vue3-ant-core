@@ -1,13 +1,26 @@
 import { request } from '@/plugins/request'
-/**
- * cluster
- */
+// login
 export function loginApi(data) {
   return request({
-    url: 'kk/user/login',
+    url: 'kk/login',
     method: 'post',
     data,
   })
 }
 
-export function logOutApi() {}
+// userInfo
+export function userInfoApi(data) {
+  return request({
+    url: '/kk/userInfo',
+    method: 'post',
+    data,
+  })
+}
+// logout
+export function logoutApi(data) {
+  return request({
+    url: '/kk/logout',
+    method: 'post',
+    data,
+  })
+}

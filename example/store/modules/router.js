@@ -1,6 +1,7 @@
 import { routes } from '@example/router/'
 import { deepCopy } from '@/utils/tools.js'
 import storage from '@/utils/storage.js'
+import { userInfoApi } from '@example/api/login'
 
 export const hasPermission = (menus, route) => {
   if (route.meta && route.meta.code) {
@@ -31,10 +32,11 @@ export const router = {
   state: {
     routers: [],
     sessionId: null,
+    userInfo: null,
   },
   actions: {
     init({ commit }) {
-      commit('GET_USERINFO')
+      commit('INIT')
     },
     generateRoutes({ commit }) {
       return new Promise((resolve) => {
@@ -48,26 +50,37 @@ export const router = {
       })
     },
     login({ commit }, payload) {
-      commit('SET_USERINFO', payload)
+      const { token } = payload
+      commit('SET_TOKEN', token)
+    },
+    getUserInfo({ commit, state }) {
+      userInfoApi({ token: state.sessionId }).then((res) => {
+        const userInfo = res?.data?.data ?? {}
+        commit('SET_USERINFO', userInfo)
+      })
     },
     logOut({ commit }) {
-      commit('SET_USERINFO', { token: '', user: '' })
+      commit('SET_TOKEN', '')
+      commit('SET_USERINFO', null)
     },
   },
   mutations: {
-    GET_USERINFO(state) {
+    INIT(state) {
       state.sessionId = storage.getSessionStorage('KK_SESSION_ID')
-      state.username = storage.getSessionStorage('KK_USER_NAME')
+      state.userInfo = storage.getSessionStorage('KK_USER_INFO')
     },
     SET_ROUTERS(state, payload) {
       state.routers = payload
     },
-    SET_USERINFO(state, payload) {
-      const { token, user } = payload
+    SET_TOKEN(state, token) {
       state.sessionId = token
-      state.username = user
       storage.setSessionStorage('KK_SESSION_ID', token)
-      storage.setSessionStorage('KK_USER_NAME', user)
+    },
+    SET_USERINFO(state, userInfo) {
+      if (userInfo) {
+        state.userInfo = userInfo
+      }
+      storage.setSessionStorage('KK_USER_INFO', userInfo)
     },
   },
   getters: {

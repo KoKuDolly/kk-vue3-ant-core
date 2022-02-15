@@ -1,6 +1,7 @@
+import { store } from '@/index'
 import { createStore } from 'vuex'
 import { router } from './modules/router'
-import { layout } from './modules/layout'
+const { layout } = store
 
 export default createStore({
   state: {},

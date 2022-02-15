@@ -20,6 +20,8 @@ export default defineComponent({
     //  初始化layout
     const store = useStore()
     store.dispatch('layout/initLayout')
+    // 登陆成功后获取用户信息
+    store.dispatch('router/getUserInfo')
     // 初始化 菜单 和 面包屑
     const route = useRoute()
     // console.log(route)

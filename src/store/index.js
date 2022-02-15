@@ -1,16 +1,6 @@
-import { createStore } from 'vuex'
-import { router } from './modules/router'
+// 只做公共 store 模块抽离，不做 store 初始化
 import { layout } from './modules/layout'
 
-export default (module) => {
-  return createStore({
-    state: {},
-    mutations: {},
-    actions: {},
-    modules: {
-      router,
-      layout,
-      ...module,
-    },
-  })
+export default {
+  layout,
 }
